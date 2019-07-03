@@ -67,7 +67,6 @@ const createConverter = config => {
         let baseClasses = model.BaseClasses ? ` extends ${model.BaseClasses}` : '';
         let importedViewModels = []; 
         members.forEach(x => {
-            console.log(x);
             if(x.Type.includes("ViewModel"))
             {
                 importedViewModels.push(x.Type);
