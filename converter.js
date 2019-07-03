@@ -33,7 +33,13 @@ const createConverter = config => {
             const filename = path.relative(process.cwd(), file.FileName);
 
             const rows = flatten([
-                ...file.Models.map(model => convertModel(model, filename)),
+                ...file.Models.sort((x,y)=> {
+                    if(x.Properties >= y.Properties)
+                    {
+                        return -1
+                    }
+                    return 1
+                }).map(model => convertModel(model, filename, file.Models)),
                 ...file.Enums.map(enum_ => convertEnum(enum_, filename)),
             ]);
 
@@ -55,14 +61,40 @@ const createConverter = config => {
         }
     };
 
-    const convertModel = (model, filename) => {
+    const convertModel = (model, filename, allModels) => {
         const rows = [];
-
         const members = [...model.Fields, ...model.Properties];
-        const baseClasses = model.BaseClasses ? ` extends ${model.BaseClasses}` : '';
-
-        if (members.length > 0) {
+        let baseClasses = model.BaseClasses ? ` extends ${model.BaseClasses}` : '';
+        let importedViewModels = []; 
+        members.forEach(x => {
+            console.log(x);
+            if(x.Type.includes("ViewModel"))
+            {
+                importedViewModels.push(x.Type);
+            }
+        })
+        if(members.length <= 0){
             rows.push(`// ${filename}`);
+            rows.push(`export interface ${model.ModelName}${baseClasses} {`);
+            rows.push(`}\n`);
+        }
+        else {
+            rows.push(`// ${filename}`);
+            if(model.BaseClasses)
+            {
+                model.BaseClasses.split(",").forEach(bc => {
+                    bc = bc.trim();
+
+                    if(!allModels.map(x => x.ModelName).includes(bc)){
+                        rows.push(`import {${bc}} from "./${bc}"\n`);
+                    }
+                })
+            }
+            if(importedViewModels.length > 0){
+                importedViewModels.forEach(ivm => {
+                    rows.push(`import {${ivm}} from "./${ivm}"\n`);
+                });
+            }
             rows.push(`export interface ${model.ModelName}${baseClasses} {`);
             members.forEach(member => {
                 rows.push(convertProperty(member));
@@ -71,6 +103,13 @@ const createConverter = config => {
         }
 
         return rows;
+    }
+
+    function selectWhere(data, propertyName) {
+        for (var i = 0; i < data.length; i++) {
+            if (data[i][propertyName] !== null) return data[i][propertyName];
+        }
+        return null;
     }
 
     const convertEnum = (enum_, filename) => {
