@@ -1,9 +1,24 @@
 # C# models to TypeScript
 
-This is a tool that consumes your C# domain models and types and creates TypeScript declaration files from them. There's other tools that does this but what makes this one different is that it internally uses [Roslyn (the .NET compiler platform)](https://github.com/dotnet/roslyn) to parse the source files, which removes the need to create and maintain our own parser.
+This is a soft fork of [Jonathan Persson's](https://github.com/jonathanp) [csharp-models-to-typescript](https://www.npmjs.com/package/csharp-models-to-typescript) npm package.
+The main difference is that we do auto import of dependent classes and interfaces in csharp classes.
 
+For example
+```csharp
+public class MyExample: IExample
+{
+    public SomePropClass SomeValue {get; set; }
+}
+```
+is translated into
+```typescript
+import {IExample} from "./IExample"
+import { SomePropClass } from "./SomePropClass";
 
-[![NPM version][npm-image]][npm-url]
+export interface MyExample extends IExample {
+    SomeValue: SomePropClass;
+}
+```
 
 
 ## Dependencies
@@ -31,7 +46,7 @@ $ npm install --save csharp-models-to-typescript
         "./models/foo/bar.cs"
     ],
     "namespace": "Api",
-    "output": "./api.d.ts",
+    "output": "./models",
     "camelCase": false,
     "camelCaseEnums": false,
     "numericEnums": false,
@@ -56,7 +71,4 @@ $ npm install --save csharp-models-to-typescript
 
 ## License
 
-MIT © [Jonathan Persson](https://github.com/jonathanp)
-
-[npm-image]: https://img.shields.io/npm/v/csharp-models-to-typescript.svg
-[npm-url]: https://npmjs.org/package/csharp-models-to-typescript
+MIT © [Jonathan Persson](https://github.com/jonathanp), Armstrong DevTeam

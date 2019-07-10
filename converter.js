@@ -33,9 +33,8 @@ const createConverter = config => {
             const filename = path.relative(process.cwd(), file.FileName);
 
             const rows = flatten([
-                ...file.Models.sort((x,y)=> {
-                    if(x.Properties >= y.Properties)
-                    {
+                ...file.Models.sort((x, y) => {
+                    if (x.Properties >= y.Properties) {
                         return -1
                     }
                     return 1
@@ -61,35 +60,63 @@ const createConverter = config => {
         }
     };
 
+    const ignoredTypes = ["DateTime", "Dictionary", "List", "IEnumerable", "DateTime?", "ICollection", "IQueryable"];
+
+    const initialIsCapital = (word) => {
+        if (word) {
+            console.log("yo");
+            return word[0] !== word[0].toLowerCase();
+        }
+        return false;
+    };
+
+    const IsIgnored = (type) => {
+        let returnValue = false;
+        ignoredTypes.forEach(x => {
+            console.log("X is", x);
+            console.log("Type is", type);
+            if(type === x)
+            {
+                returnValue = true;
+            }
+            if (type.includes(x)) {
+                returnValue = true;
+            }
+        });
+        console.log("returnvalue", returnValue);
+        return returnValue;
+    }
+
     const convertModel = (model, filename, allModels) => {
         const rows = [];
         const members = [...model.Fields, ...model.Properties];
         let baseClasses = model.BaseClasses ? ` extends ${model.BaseClasses}` : '';
-        let importedViewModels = []; 
+        let importedViewModels = [];
         members.forEach(x => {
-            if(x.Type.includes("ViewModel"))
-            {
-                importedViewModels.push(x.Type);
+            if (initialIsCapital(x.Type)) {
+                if (IsIgnored(x.Type) === false) {
+                    console.log(x);
+                    importedViewModels.push(x.Type);
+                }
             }
         })
-        if(members.length <= 0){
+        if (members.length <= 0) {
             rows.push(`// ${filename}`);
             rows.push(`export interface ${model.ModelName}${baseClasses} {`);
             rows.push(`}\n`);
         }
         else {
             rows.push(`// ${filename}`);
-            if(model.BaseClasses)
-            {
+            if (model.BaseClasses) {
                 model.BaseClasses.split(",").forEach(bc => {
                     bc = bc.trim();
 
-                    if(!allModels.map(x => x.ModelName).includes(bc)){
+                    if (!allModels.map(x => x.ModelName).includes(bc)) {
                         rows.push(`import {${bc}} from "./${bc}"\n`);
                     }
                 })
             }
-            if(importedViewModels.length > 0){
+            if (importedViewModels.length > 0) {
                 importedViewModels.forEach(ivm => {
                     rows.push(`import {${ivm}} from "./${ivm}"\n`);
                 });

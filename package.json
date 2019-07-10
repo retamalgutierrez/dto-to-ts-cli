@@ -1,17 +1,17 @@
 {
-  "name": "csharp-models-to-typescript",
+  "name": "csharp-models-to-typescript-enhanced",
   "version": "0.15.0",
-  "title": "C# models to TypeScript",
-  "author": "Jonathan Persson <persson.jonathan@gmail.com>",
+  "title": "C# models to TypeScript Enhanced",
+  "author": "Jonathan Persson <persson.jonathan@gmail.com>, DevTeam <armstrong>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jonathanp/csharp-models-to-typescript.git"
+    "url": "https://github.com/atgfr8/csharp-models-to-typescript"
   },
   "engines": {
     "node": ">=6.0.0"
   },
   "bin": {
-    "csharp-models-to-typescript": "./index.js"
+    "csharp-models-to-typescript-enhanced": "./index.js"
   }
 }
