@@ -62,7 +62,7 @@ $ npm install --save csharp-models-to-typescript-enhance
 
 ```
 "scripts": {
-    "generate-types": "csharp-models-to-typescript --config=your-config-file.json"
+    "generate-types": "csharp-models-to-typescript-enhanced --config=your-config-file.json"
 },
 ```
 
