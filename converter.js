@@ -64,7 +64,6 @@ const createConverter = config => {
 
     const initialIsCapital = (word) => {
         if (word) {
-            console.log("yo");
             return word[0] !== word[0].toLowerCase();
         }
         return false;
@@ -73,8 +72,6 @@ const createConverter = config => {
     const IsIgnored = (type) => {
         let returnValue = false;
         ignoredTypes.forEach(x => {
-            console.log("X is", x);
-            console.log("Type is", type);
             if(type === x)
             {
                 returnValue = true;
@@ -83,7 +80,6 @@ const createConverter = config => {
                 returnValue = true;
             }
         });
-        console.log("returnvalue", returnValue);
         return returnValue;
     }
 
@@ -95,7 +91,6 @@ const createConverter = config => {
         members.forEach(x => {
             if (initialIsCapital(x.Type)) {
                 if (IsIgnored(x.Type) === false) {
-                    console.log(x);
                     importedViewModels.push(x.Type);
                 }
             }

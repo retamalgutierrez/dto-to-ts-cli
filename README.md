@@ -29,7 +29,7 @@ export interface MyExample extends IExample {
 ## Install
 
 ```
-$ npm install --save csharp-models-to-typescript
+$ npm install --save csharp-models-to-typescript-enhance
 ```
 
 ## How to use
