@@ -77,7 +77,6 @@ const createConverter = config => {
             }
             if (type.includes(x)) {
                 if (type.includes("Model")) {
-                    console.log("the type has model", type)
                     returnValue = false;
                 } else {
                     returnValue = true;
@@ -90,7 +89,7 @@ const createConverter = config => {
     const sanitize = (type) => {
         if (type.includes("<")) {
             return type.split("<")[1].replace(">", "")
-        } else{
+        } else {
             return type;
         }
     }
@@ -102,11 +101,10 @@ const createConverter = config => {
         let importedViewModels = [];
         members.forEach(x => {
             if (initialIsCapital(x.Type)) {
-                console.log(`type: ${x.Type} is isgnored: ${IsIgnored(x.Type)}`)
                 if (IsIgnored(x.Type) === false) {
-                    console.log("The type:", x.Type);
-                    console.log(importedViewModels);
-                    importedViewModels.push(sanitize(x.Type));
+                    if (!importedViewModels.includes(sanitize(x.Type))) {
+                        importedViewModels.push(sanitize(x.Type));
+                    }
                 }
             }
         })
@@ -128,9 +126,7 @@ const createConverter = config => {
             }
             if (importedViewModels.length > 0) {
                 importedViewModels.forEach(ivm => {
-                    console.log("ivm", ivm);
                     rows.push(`import {${ivm}} from "./${ivm}"\n`);
-                    console.log(`import {${ivm}} from "./${ivm}"\n`);
                 });
             }
             rows.push(`export interface ${model.ModelName}${baseClasses} {`);
