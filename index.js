@@ -43,7 +43,7 @@ const dotnetProject = path.join(__dirname, 'lib/csharp-models-to-json');
 
 let timer = process.hrtime();
 
-exec('dotnet restore', () => {
+exec(`dotnet restore --project "${dotnetProject}" "${path.resolve(configPath)}"`, () => {
     console.clear();
 });
 exec(`dotnet run --project "${dotnetProject}" "${path.resolve(configPath)}"`, (err, stdout) => {
