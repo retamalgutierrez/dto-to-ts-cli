@@ -36,6 +36,7 @@ namespace CSharpModelsToJson
             }
 
             string json = JsonConvert.SerializeObject(files);
+            System.Console.Clear();
             System.Console.WriteLine(json);
         }
 
