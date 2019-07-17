@@ -43,6 +43,9 @@ const dotnetProject = path.join(__dirname, 'lib/csharp-models-to-json');
 
 let timer = process.hrtime();
 
+exec('dotnet restore', () => {
+    console.clear();
+});
 exec(`dotnet run --project "${dotnetProject}" "${path.resolve(configPath)}"`, (err, stdout) => {
     if (err) {
         return console.error(err);
@@ -51,7 +54,6 @@ exec(`dotnet run --project "${dotnetProject}" "${path.resolve(configPath)}"`, (e
     let json;
 
     try {
-        console.log(stdout);
         json = JSON.parse(stdout);
     } catch (error) {
         return console.error('The output from `csharp-models-to-json` contains invalid JSON.');
