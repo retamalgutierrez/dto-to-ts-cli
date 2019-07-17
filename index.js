@@ -52,7 +52,7 @@ exec(`dotnet run --project "${dotnetProject}" "${path.resolve(configPath)}"`, (e
     }
 
     let json;
-
+    console.log(stdout);
     try {
         json = JSON.parse(stdout);
     } catch (error) {
