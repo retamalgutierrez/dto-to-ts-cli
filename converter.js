@@ -72,15 +72,27 @@ const createConverter = config => {
     const IsIgnored = (type) => {
         let returnValue = false;
         ignoredTypes.forEach(x => {
-            if(type === x)
-            {
+            if (type === x) {
                 returnValue = true;
             }
             if (type.includes(x)) {
-                returnValue = true;
+                if (type.includes("Model")) {
+                    console.log("the type has model", type)
+                    returnValue = false;
+                } else {
+                    returnValue = true;
+                }
             }
         });
         return returnValue;
+    }
+
+    const sanitize = (type) => {
+        if (type.includes("<")) {
+            return type.split("<")[1].replace(">", "")
+        } else{
+            return type;
+        }
     }
 
     const convertModel = (model, filename, allModels) => {
@@ -90,8 +102,11 @@ const createConverter = config => {
         let importedViewModels = [];
         members.forEach(x => {
             if (initialIsCapital(x.Type)) {
+                console.log(`type: ${x.Type} is isgnored: ${IsIgnored(x.Type)}`)
                 if (IsIgnored(x.Type) === false) {
-                    importedViewModels.push(x.Type);
+                    console.log("The type:", x.Type);
+                    console.log(importedViewModels);
+                    importedViewModels.push(sanitize(x.Type));
                 }
             }
         })
@@ -113,7 +128,9 @@ const createConverter = config => {
             }
             if (importedViewModels.length > 0) {
                 importedViewModels.forEach(ivm => {
+                    console.log("ivm", ivm);
                     rows.push(`import {${ivm}} from "./${ivm}"\n`);
+                    console.log(`import {${ivm}} from "./${ivm}"\n`);
                 });
             }
             rows.push(`export interface ${model.ModelName}${baseClasses} {`);

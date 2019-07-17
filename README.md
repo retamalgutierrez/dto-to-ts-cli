@@ -2,10 +2,12 @@
 
 This is a soft fork of [Jonathan Persson's](https://github.com/jonathanp) [csharp-models-to-typescript](https://www.npmjs.com/package/csharp-models-to-typescript) npm package.
 The main difference is that we do auto import of dependent classes and interfaces in csharp classes.
+In order to facilitate this, you are required to append your types with "Model".
+
 
 For example
 ```csharp
-public class MyExample: IExample
+public class MyExampleModel: IExample
 {
     public SomePropClass SomeValue {get; set; }
 }
@@ -15,7 +17,7 @@ is translated into
 import {IExample} from "./IExample"
 import { SomePropClass } from "./SomePropClass";
 
-export interface MyExample extends IExample {
+export interface MyExampleModel extends IExample {
     SomeValue: SomePropClass;
 }
 ```
