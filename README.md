@@ -11,7 +11,7 @@ The main difference is that we change according angular coding style
 ## Install
 
 ```
-$ npm install --save csharp-models-to-typescript-enhance
+$ npm install --save dto-to-ts-cli
 ```
 
 ## How to use
