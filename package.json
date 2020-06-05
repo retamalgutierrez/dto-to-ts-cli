@@ -1,13 +1,25 @@
 {
   "name": "dto-to-ts-cli",
-  "version": "1",
-  "title": "C# dto to Ts",
-  "author": "Sergio Retamal <retamalgutierrez@gmail.com>",
-  "license": "MIT",
+  "version": "1.1.0",
+  "description": "dto-to-ts-cli",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/retamalgutierrez/dto-to-ts-cli.git"
+    "url": "git+https://github.com/retamalgutierrez/dto-to-ts-cli.git"
   },
+  "keywords": [
+    "DTO",
+    "TS"
+  ],
+  "author": "Sergio Retamal",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/retamalgutierrez/dto-to-ts-cli/issues"
+  },
+  "homepage": "https://github.com/retamalgutierrez/dto-to-ts-cli#readme",
   "engines": {
     "node": ">=6.0.0"
   },
