@@ -44,7 +44,7 @@ $ npm install --save dto-to-ts-cli
 
 ```
 "scripts": {
-    "generate-types": "dto-to-ts-cli --config=your-config-file.json"
+    "generate-types": "node node_modules\\dto-to-ts-cli\\index.js --config=your-config-file.json"
 },
 ```
 
