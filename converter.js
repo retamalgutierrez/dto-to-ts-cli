@@ -31,14 +31,19 @@ const createConverter = config => {
     const convert = json => {
         const content = json.map(file => {
             const filename = path.relative(process.cwd(), file.FileName);
-
             const rows = flatten([
                 ...file.Models.sort((x, y) => {
                     if (x.Properties >= y.Properties) {
                         return -1
                     }
                     return 1
-                }).map(model => convertModel(model, filename, file.Models)),
+                }).map(model => {
+                    model.ModelName = model.ModelName.replace("Model", "Interface").replace("Entity", "Interface");
+                    model.Properties.forEach(element => {
+                        element.Type = element.Type.replace("Model", "Interface").replace("Entity", "Interface");
+                    });
+                    return convertModel(model, filename, file.Models)
+                }),
                 ...file.Enums.map(enum_ => convertEnum(enum_, filename)),
             ]);
 
@@ -76,7 +81,7 @@ const createConverter = config => {
                 returnValue = true;
             }
             if (type.includes(x)) {
-                if (type.includes("Model")) {
+                if (type.includes("Interface") || type.includes("entity")) {
                     returnValue = false;
                 } else {
                     returnValue = true;
@@ -118,15 +123,22 @@ const createConverter = config => {
             if (model.BaseClasses) {
                 model.BaseClasses.split(",").forEach(bc => {
                     bc = bc.trim();
-
+                    bc = bc.replace("Model", "Interface").replace("Entity", "Interface");
                     if (!allModels.map(x => x.ModelName).includes(bc)) {
-                        rows.push(`import {${bc}} from "./${bc}"\n`);
+                        let from = bc;
+                        from = from.replace(/(?:^|\.?)([A-Z])/g, function (x, y) { return "-" + y.toLowerCase() }).replace(/^-/, "")
+                        from = from.replace("-interface", ".interface")
+                        rows.push(`import {${bc}} from './${from}';\n`);
                     }
                 })
             }
             if (importedViewModels.length > 0) {
                 importedViewModels.forEach(ivm => {
-                    rows.push(`import {${ivm}} from "./${ivm}"\n`);
+                    ivm = ivm.replace("Model", "Interface").replace("Entity", "Interface");
+                    let from = ivm;
+                    from = from.replace(/(?:^|\.?)([A-Z])/g, function (x, y) { return "-" + y.toLowerCase() }).replace(/^-/, "")
+                    from = from.replace("-interface", ".interface")
+                    rows.push(`import {${ivm}} from './${from}';\n`);
                 });
             }
             rows.push(`export interface ${model.ModelName}${baseClasses} {`);

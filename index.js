@@ -58,28 +58,18 @@ exec(`dotnet run --project "${dotnetProject}" "${path.resolve(configPath)}"`, (e
 
     json.forEach(j => {
         let types = converter([j]);
-        let t =j.FileName.replace(/^.*[\\\/]/, '').replace(".cs", ".ts");
-            fs.writeFile(output + t, types, err => {
+        let t = j.FileName.replace(/^.*[\\\/]/, '').replace(".cs", ".ts")
+        t = t.replace(/(?:^|\.?)([A-Z])/g, function (x,y){return "-" + y.toLowerCase()}).replace(/^-/, "")
+        t = t.replace("-model", ".interface").replace("-entity", ".interface");
+        //console.log(t);
+        fs.writeFile(output + t, types, err => {
             if (err) {
                 return console.error(err);
             }
-    
+
             timer = process.hrtime(timer);
             console.log('Done in %d.%d seconds.', timer[0], timer[1]);
         });
     });
-    // const types = converter(json);
-    // console.log(types);
-
-    // output.forEach(element => {
-    //     fs.writeFile(element, types, err => {
-    //         if (err) {
-    //             return console.error(err);
-    //         }
-    
-    //         timer = process.hrtime(timer);
-    //         console.log('Done in %d.%d seconds.', timer[0], timer[1]);
-    //     });
-    // });
 
 });

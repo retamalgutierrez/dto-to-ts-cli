@@ -1,0 +1,14 @@
+{
+    "include": [
+      "./dto/*.cs"
+    ],
+    "exclude": [],
+    "namespace": "",
+    "output": "./ts/",
+    "camelCase": false,
+    "camelCaseEnums": false,
+    "numericEnums": false,
+    "stringLiteralTypesInsteadOfEnums": false,
+    "customTypeTranslations": {}
+  }
+  
