@@ -1,6 +1,6 @@
 {
   "name": "dto-to-ts-cli",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "dto-to-ts-cli",
   "main": "index.js",
   "scripts": {
