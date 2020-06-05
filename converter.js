@@ -128,7 +128,7 @@ const createConverter = config => {
                         let from = bc;
                         from = from.replace(/(?:^|\.?)([A-Z])/g, function (x, y) { return "-" + y.toLowerCase() }).replace(/^-/, "")
                         from = from.replace("-interface", ".interface")
-                        rows.push(`import {${bc}} from './${from}';\n`);
+                        if (from.length > 1) rows.push(`import {${bc}} from './${from}';\n`);
                     }
                 })
             }
@@ -138,7 +138,7 @@ const createConverter = config => {
                     let from = ivm;
                     from = from.replace(/(?:^|\.?)([A-Z])/g, function (x, y) { return "-" + y.toLowerCase() }).replace(/^-/, "")
                     from = from.replace("-interface", ".interface")
-                    rows.push(`import {${ivm}} from './${from}';\n`);
+                    if (from.length > 1) rows.push(`import {${ivm}} from './${from}';\n`);
                 });
             }
             rows.push(`export interface ${model.ModelName}${baseClasses} {`);

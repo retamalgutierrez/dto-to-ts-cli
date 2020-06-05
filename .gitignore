@@ -4,6 +4,8 @@ lib/csharp-models-to-json/bin
 lib/csharp-models-to-json/obj
 lib/csharp-models-to-json_test/obj/
 lib/csharp-models-to-json_test/bin/
-
+dto
+dto2
 .vscode/*
 .idea/*
+csharp-models-to-typescript.json

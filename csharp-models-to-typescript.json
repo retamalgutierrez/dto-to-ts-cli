@@ -1,6 +1,7 @@
 {
     "include": [
-      "./dto/*.cs"
+      "./dto/RequestDataTableModel.cs",
+      "./dto2/DboTest.cs"
     ],
     "exclude": [],
     "namespace": "",
