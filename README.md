@@ -1,27 +1,7 @@
 # C# models to TypeScript
 
-This is a soft fork of [Jonathan Persson's](https://github.com/jonathanp) [csharp-models-to-typescript](https://www.npmjs.com/package/csharp-models-to-typescript) npm package.
-The main difference is that we do auto import of dependent classes and interfaces in csharp classes.
-In order to facilitate this, you are required to append your types with "Model".
-
-
-For example
-```csharp
-public class MyExampleModel: IExample
-{
-    public SomePropClass SomeValue {get; set; }
-}
-```
-is translated into
-```typescript
-import {IExample} from "./IExample"
-import { SomePropClass } from "./SomePropClass";
-
-export interface MyExampleModel extends IExample {
-    SomeValue: SomePropClass;
-}
-```
-
+This is a soft fork of [James Loyd's](https://github.com/JamesLoyd/) [csharp-models-to-typescript-enhanced](https://www.npmjs.com/package/csharp-models-to-typescript-enhanced) npm package.
+The main difference is that we change according angular coding style
 
 ## Dependencies
 
@@ -64,7 +44,7 @@ $ npm install --save csharp-models-to-typescript-enhance
 
 ```
 "scripts": {
-    "generate-types": "csharp-models-to-typescript-enhanced --config=your-config-file.json"
+    "generate-types": "dto-to-ts-cli --config=your-config-file.json"
 },
 ```
 

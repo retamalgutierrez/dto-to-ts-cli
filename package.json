@@ -1,17 +1,17 @@
 {
-  "name": "csharp-models-to-typescript-enhanced",
-  "version": "1.0.2",
-  "title": "C# models to TypeScript Enhanced",
-  "author": "Jonathan Persson <persson.jonathan@gmail.com>, DevTeam <armstrong>",
+  "name": "dto-to-ts-cli",
+  "version": "1",
+  "title": "C# dto to Ts",
+  "author": "Sergio Retamal <retamalgutierrez@gmail.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/atgfr8/csharp-models-to-typescript"
+    "url": "https://github.com/retamalgutierrez/dto-to-ts-cli.git"
   },
   "engines": {
     "node": ">=6.0.0"
   },
   "bin": {
-    "csharp-models-to-typescript-enhanced": "./index.js"
+    "dto-to-ts-cli": "./index.js"
   }
 }
