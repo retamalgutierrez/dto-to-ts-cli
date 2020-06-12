@@ -130,7 +130,7 @@ const createConverter = config => {
                         from = from.replace("-interface", ".interface")
 
                         if (bc !== model.ModelName) {
-                            if (from.length > 1) rows.push(`import {${bc}} from './${from}';\n`);
+                            if (from.length > 1) rows.push(`import { ${bc} } from './${from}';\n`);
                         }
                     }
                 })
@@ -143,7 +143,7 @@ const createConverter = config => {
                     from = from.replace("-interface", ".interface")
 
                     if (ivm !== model.ModelName) {
-                        if (from.length > 1) rows.push(`import {${ivm}} from './${from}';\n`);
+                        if (from.length > 1) rows.push(`import { ${ivm} } from './${from}';\n`);
                     }
                 });
             }
