@@ -1,13 +1,13 @@
 {
     "include": [
-      "./dto/DboAccionModel.cs"
+      "./dto/*.cs"
     ],
     "exclude": [],
     "namespace": "",
     "output": "./ts/",
     "camelCase": false,
     "camelCaseEnums": false,
-    "numericEnums": false,
+    "numericEnums": true,
     "stringLiteralTypesInsteadOfEnums": false,
     "customTypeTranslations": {}
   }

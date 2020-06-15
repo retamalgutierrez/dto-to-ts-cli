@@ -38,9 +38,13 @@ const createConverter = config => {
                     }
                     return 1
                 }).map(model => {
-                    model.ModelName = model.ModelName.replace("Model", "Interface").replace("Entity", "Interface");
+                    model.ModelName = model.ModelName.replace("Model", "Interface")
+                        .replace("Entity", "Interface")
+                        .replace("QueryData", "QueryDataInterface")
                     model.Properties.forEach(element => {
-                        element.Type = element.Type.replace("Model", "Interface").replace("Entity", "Interface");
+                        element.Type = element.Type.replace("Model", "Interface")
+                            .replace("Entity", "Interface")
+                            .replace("QueryData", "QueryDataInterface")
                     });
                     return convertModel(model, filename, file.Models)
                 }),
@@ -81,7 +85,7 @@ const createConverter = config => {
                 returnValue = true;
             }
             if (type.includes(x)) {
-                if (type.includes("Interface") || type.includes("entity")) {
+                if (type.includes("Interface") || type.includes("entity")) { // ??
                     returnValue = false;
                 } else {
                     returnValue = true;
@@ -128,6 +132,7 @@ const createConverter = config => {
                         let from = bc;
                         from = from.replace(/(?:^|\.?)([A-Z])/g, function (x, y) { return "-" + y.toLowerCase() }).replace(/^-/, "")
                         from = from.replace("-interface", ".interface")
+                            .replace("-query-enum", "-query.enum");
 
                         if (bc !== model.ModelName) {
                             if (from.length > 1) rows.push(`import { ${bc} } from './${from}';\n`);
@@ -141,6 +146,7 @@ const createConverter = config => {
                     let from = ivm;
                     from = from.replace(/(?:^|\.?)([A-Z])/g, function (x, y) { return "-" + y.toLowerCase() }).replace(/^-/, "")
                     from = from.replace("-interface", ".interface")
+                        .replace("-query-enum", "-query.enum");
 
                     if (ivm !== model.ModelName) {
                         if (from.length > 1) rows.push(`import { ${ivm} } from './${from}';\n`);

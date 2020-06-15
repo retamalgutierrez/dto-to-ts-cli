@@ -61,6 +61,7 @@ exec(`dotnet run --project "${dotnetProject}" "${path.resolve(configPath)}"`, (e
         let t = j.FileName.replace(/^.*[\\\/]/, '').replace(".cs", ".ts")
         t = t.replace(/(?:^|\.?)([A-Z])/g, function (x,y){return "-" + y.toLowerCase()}).replace(/^-/, "")
         t = t.replace("-model", ".interface").replace("-entity", ".interface");
+        t = t.replace("-query-data", "-query-data.interface").replace("-query-enum", "-query.enum");
         //console.log(t);
         fs.writeFile(output + t, types, err => {
             if (err) {
